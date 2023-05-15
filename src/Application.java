@@ -25,13 +25,18 @@ public class Application {
 			System.out.println(e.getMessage());
 		}
 		
-		insertStudent("Marianna", "Albrici", "F", null, 7.9, 6.6, 10 );
-		insertStudent("Elisa", "Alvaro", "F", null, 6.9, 5.6, 10 );
+//		insertStudent("Marianna", "Albrici", "F", null, 7.9, 6.6, 10.0 );
+//		insertStudent("Elisa", "Alvaro", "F", null, 6.9, 5.6, 10.0 );
+//		insertStudent("Alice", "Alvaro", "F", null, 4.9, 2.6, 8.0 );
 		
-		deleteStudent(2);
+//		deleteStudent(1);
+
+		
+		
 		
 		HashMap<String, Object> updateStudentData = new HashMap<>();
 		updateStudentData.put("name", "Alice");
+		updateStudentData.put("lastname", "Pontiggia");
 		
 		updateStudent(4, updateStudentData);
 		
@@ -66,12 +71,13 @@ public class Application {
 	}
 	
 	public static void updateStudent(int id, HashMap<String, Object> student) {
-		String sqlUpdate = "UPDATE public.school_students SET name=? WHERE id = ?;";
+		String sqlUpdate = "UPDATE public.school_students SET name = ?, lastname = ? WHERE id = ?;";
 		
 		try {
 			PreparedStatement stmntUpdate = connection.prepareStatement(sqlUpdate);
-			stmntUpdate.setInt(1, id);
-			stmntUpdate.setObject(2, student);
+			stmntUpdate.setInt(3, id);
+			stmntUpdate.setObject(1, student.get("name"));
+			stmntUpdate.setObject(2, student.get("lastname"));
 
 			stmntUpdate.execute();
 			System.out.println("STUDENTE MODIFICATO");
