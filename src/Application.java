@@ -25,29 +25,27 @@ public class Application {
 			System.out.println(e.getMessage());
 		}
 		
-//		insertStudent("Marianna", "Albrici", "F", null, 7.9, 6.6, 10.0 );
-//		insertStudent("Elisa", "Alvaro", "F", null, 6.9, 5.6, 10.0 );
-//		insertStudent("Alice", "Alvaro", "F", null, 4.9, 2.6, 8.0 );
+//		insertStudent("Marianna", "Albrici", "F", Date.ValueOf(1996/03/13), 6.0, 10.0 );
+//		insertStudent("Elisa", "Alvaro", "F", Date.ValueOf(2004/10/27), 5.9, 10.0 );
+//		insertStudent("Alice", "Alvaro", "F", Date.ValueOf(2007/05/01), 2.5, 8.0 );
 		
 //		deleteStudent(1);
-
-		
-		
 		
 		HashMap<String, Object> updateStudentData = new HashMap<>();
 		updateStudentData.put("name", "Alice");
 		updateStudentData.put("lastname", "Pontiggia");
+		updateStudentData.put("min_vote", "2.5");
 		
 		updateStudent(4, updateStudentData);
 		
-		
 		getBest();
 		
-		getVoteRange(1, 7);
+		getVoteRange(4, 10);
 		
 	}
 	
-	public static void insertStudent(String name, String lastname, String gender, Date birthday, double avg, double min_vote, double max_vote) {
+	public static void insertStudent(String name, String lastname, String gender, Date birthday, double min_vote, double max_vote) {
+		double avg = (min_vote + max_vote)/2;
 		String sqlInsert = "INSERT INTO public.school_students(name, lastname, gender, birthday, avg, min_vote, max_vote) VALUES (?, ?, ?, ?, ?, ?, ?);";
 		
 		try {
@@ -107,7 +105,7 @@ public class Application {
 			ResultSet bestAverage = stmntGetBest.executeQuery(sqlGetBest);
 			
 			while(bestAverage.next()) {
-				System.out.println("| Average: " + bestAverage.getString("avg"));
+				System.out.println("Average: " + bestAverage.getString("avg"));
 			}
 			
 		} catch (SQLException e) {
@@ -127,7 +125,7 @@ public class Application {
 			ResultSet voteRange = stmntVoteRange.executeQuery();
 			
 			while(voteRange.next()) {
-				System.out.println("Student in the range are: " + voteRange.getString("name"));
+				System.out.println("Students in the range are: " + voteRange.getString("name"));
 			}
 			
 		} catch (SQLException e) {
